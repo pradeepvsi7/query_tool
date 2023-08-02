@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src='multifilter.js'></script>
+* {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse;
+  width: 20%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+}
+</style>
+  <head>
+    <title>Dropdown Filter for Table Columns</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('table thead th').each(function(i) {
+          var select = $('<select><option value="">All</option></select>')
+            .appendTo($(this).empty())
+            .on('change', function() {
+              var term = $(this).val();
+              $('table tbody tr').each(function() {
+                var content = $(this).find('td').eq(i).text();
+                $(this).toggle(content.indexOf(term) > -1);
+              });
+            });
+          $('table tbody tr').each(function() {
+            var value = $(this).find('td').eq(i).text();
+            if (select.find('option[value="' + value + '"]').length === 0){
+              $('<option>').val(value).text(value).appendTo(select);
+            }
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <table id="myTable">
+	<thead>
+        <tr class="header">
+    {% for column in columns %}
+    <th style="width:10%;" >{{column}}</th>
+	  {% endfor %}
+
+  </tr>
+  </thead>
+  {% for files in file_unassigned %}
+  <tr>
+  {% for file in files %}
+  <td>{{ file }}</td>
+  {% endfor %}
+  </tr>
+  {% endfor %}
+    </table>
+  </body>
+  <script type='text/javascript'>
+$(document).ready(function() {
+$('.filter').multifilter()
+})
+
+</script>
+</html>

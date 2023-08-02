@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+h2 {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+  text-align: center;
+
+}
+
+th, td {
+  text-align: center;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+</style>
+</head>
+<body>
+<a href="/home">Home</a><br>
+<a href="/qc_individual">Qc Weekly Individual</a> <br>
+<a href="/qc_team">Qc Team Count</a><br>
+<a href="/qc_monthly">Qc Monthly Count</a><br><br>
+
+<h2>QC Individual Count Monthly</h2>
+
+<table>
+  <tr class="header">
+    <th>Qc Name</th>
+    <th>Status</th>
+    <th>Abstract Count</th>
+  </tr>
+  {% for qc_list in month_qc%}
+  <tr>
+  {% for qc in qc_list %}
+  <td>{{ qc }}</td>
+  {% endfor %}
+  </tr>
+  {% endfor %}
+</table>
+
+</body>
+</html>
